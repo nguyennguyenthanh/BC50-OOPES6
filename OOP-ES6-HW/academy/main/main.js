@@ -2,254 +2,126 @@ import Person from "../person/person.js";
 import Student from "../student/student.js";
 import Employee from "../employee/employee.js";
 import Customer from "../customer/customer.js";
+import listPerson from "../listperson/listperson.js";
 
 const getEle = (id) => document.getElementById(id);
 
+/***RENDER POPUP */
+const formStudent = [
+    { id: 'ma', name: 'maSo', placeHolder: 'Mã', spanTag: 'tbMa', errorId: 'errorMaSo' },
+    { id: 'name', name: 'ten', placeHolder: 'Họ và tên', spanTag: 'tbTen', errorId: 'errorName' },
+    { id: 'email', name: 'email', placeHolder: 'Email', spanTag: 'tbEmail', errorId: 'errorEmail' },
+    { id: 'adress', name: 'diaChi', placeHolder: 'Địa Chỉ', spanTag: 'tbAddress', errorId: 'errorAddress' },
+    { id: 'diemToan', name: 'mathScore', placeHolder: 'Điểm Toán', spanTag: 'tbDiemToan', errorId: 'errorDiemToan' },
+    { id: 'diemLy', name: 'phisicScore', placeHolder: 'Điểm Lý', spanTag: 'tbDiemLy', errorId: 'errorDiemLy' },
+    { id: 'diemHoa', name: 'chemisScore', placeHolder: 'Điểm Hóa', spanTag: 'tbDiemHoa', errorId: 'errorDiemHoa' },
+];
+const formEmployee = [
+    { id: 'ma', name: 'maSo', placeHolder: 'Mã', spanTag: 'tbMa', errorId: 'errorMaSo' },
+    { id: 'name', name: 'ten', placeHolder: 'Họ và tên', spanTag: 'tbTen', errorId: 'errorName' },
+    { id: 'email', name: 'email', placeHolder: 'Email', spanTag: 'tbEmail', errorId: 'errorEmail' },
+    { id: 'adress', name: 'diaChi', placeHolder: 'Địa Chỉ', spanTag: 'tbAddress', errorId: 'errorAddress' },
+    { id: 'soNgayLam', name: 'ngayLam', placeHolder: 'Số Ngày Làm', spanTag: 'tbSoNgayLam', errorId: 'errorSoNgayLam' },
+    { id: 'luongNgay', name: 'luongNgay', placeHolder: 'Lương Theo Ngày', spanTag: 'tbluongTheoNgay', errorId: 'errorluongTheoNgay' },
+];
+const formCustomer = [
+    { id: 'ma', name: 'maSo', placeHolder: 'Mã', spanTag: 'tbMa', errorId: 'errorMaSo' },
+    { id: 'name', name: 'ten', placeHolder: 'Họ và tên', spanTag: 'tbTen', errorId: 'errorName' },
+    { id: 'email', name: 'email', placeHolder: 'Email', spanTag: 'tbEmail', errorId: 'errorEmail' },
+    { id: 'adress', name: 'diaChi', placeHolder: 'Địa Chỉ', spanTag: 'tbAddress', errorId: 'errorAddress' },
+    { id: 'tenCongTy', name: 'nameCom', placeHolder: 'Tên Công Ty', spanTag: 'tbtenCongTy', errorId: 'errortenCongTy' },
+    { id: 'triHoaDon', name: 'bill', placeHolder: 'Trị Hóa Đơn', spanTag: 'tbtriHoaDon', errorId: 'errortriHoaDon' },
+    { id: 'danhGia', name: 'assess', placeHolder: 'Đánh Giá', spanTag: 'tbdanhGia', errorId: 'errordanhGia' },
+];
 
-getEle("btnThem1").addEventListener("click",()=>{
-    const content = `
-    <div class="form-group">
+const renderForm = (formType) => {
+    return formType.map((inputItem) => {
+        return `
+        <div class="form-group">
           <div class="input-group">
               <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fa fa-user"></i></span>
               </div>
-              <input type="text" name="tk" id="ma" class="form-control input-sm"
-                  placeholder="Mã">
+              <input type="text" name="${inputItem.name}" id="${inputItem.id}" class="form-control input-sm"
+                  placeholder="${inputItem.placeHolder}">
           </div>
-          <span class="sp-thongbao" id="tbTKNV"></span>
-          <!-- display:none; vì khi vừa vào browser thì k hiện -->
-          <div id="errorTaiKhoan" style="display: none;" class="text-danger"></div>
-    </div>
-    <div class="form-group">
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-              </div>
-              <input type="name" name="name" id="name" class="form-control input-sm"
-                  placeholder="Họ và tên">
-          </div>
-          <span class="sp-thongbao" id="tbTen"></span>
-          <div id="errortenNV" style="display: none;" class="text-danger"></div>
-    </div>
-    <div class="form-group">
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-              </div>
-              <input type="email" name="email" id="email" class="form-control input-sm"
-                  placeholder="Email">
-          </div>
-          <span class="sp-thongbao" id="tbEmail"></span>
-          <div id="errorEmail" style="display: none;" class="text-danger"></div>
-    </div>
-    <div class="form-group">
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-key"></i></span>
-              </div>
-              <input type="text" name="password" id="adress" class="form-control input-sm"
-                  placeholder="Địa Chỉ">
-          </div>
-          <span class="sp-thongbao" id="tbMatKhau"></span>
-          <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-    </div>
-      <div class="form-group">
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-key"></i></span>
-              </div>
-              <input type="text" name="password" id="diemToan" class="form-control input-sm"
-                  placeholder="Điểm Toán">
-          </div>
-          <span class="sp-thongbao" id="tbMatKhau"></span>
-          <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-      </div>
-      <div class="form-group">
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-key"></i></span>
-              </div>
-              <input type="text" name="password" id="diemLy" class="form-control input-sm"
-                  placeholder="Điểm Lý">
-          </div>
-          <span class="sp-thongbao" id="tbMatKhau"></span>
-          <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-      </div>
-      <div class="form-group">
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-key"></i></span>
-              </div>
-              <input type="text" name="password" id="diemHoa" class="form-control input-sm"
-                  placeholder="Điểm Hóa">
-          </div>
-          <span class="sp-thongbao" id="tbMatKhau"></span>
-          <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-      </div>
-    `
-    getEle("formNV").innerHTML = content;    
-});
-getEle("btnThem2").addEventListener("click",()=>{
-  const content = `
-  <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-user"></i></span>
-            </div>
-            <input type="text" name="tk" id="ma" class="form-control input-sm"
-                placeholder="Mã">
+          <span class="sp-thongbao" id="${inputItem.spanTag}"></span>
+          <div id="${inputItem.errorId}" style="display: none;" class="text-danger"></div>
         </div>
-        <span class="sp-thongbao" id="tbTKNV"></span>
-        <!-- display:none; vì khi vừa vào browser thì k hiện -->
-        <div id="errorTaiKhoan" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-            </div>
-            <input type="name" name="name" id="name" class="form-control input-sm"
-                placeholder="Họ và tên">
-        </div>
-        <span class="sp-thongbao" id="tbTen"></span>
-        <div id="errortenNV" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-            </div>
-            <input type="email" name="email" id="email" class="form-control input-sm"
-                placeholder="Email">
-        </div>
-        <span class="sp-thongbao" id="tbEmail"></span>
-        <div id="errorEmail" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-key"></i></span>
-            </div>
-            <input type="text" name="password" id="adress" class="form-control input-sm"
-                placeholder="Địa Chỉ">
-        </div>
-        <span class="sp-thongbao" id="tbMatKhau"></span>
-        <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-      <div class="input-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-key"></i></span>
-          </div>
-          <input type="text" name="password" id="soNgayLam" class="form-control input-sm"
-              placeholder="Số Ngày Làm">
-      </div>
-      <span class="sp-thongbao" id="tbMatKhau"></span>
-      <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-      <div class="input-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-key"></i></span>
-          </div>
-          <input type="text" name="password" id="luongTheoNgay" class="form-control input-sm"
-              placeholder="Lương Theo Ngày">
-      </div>
-      <span class="sp-thongbao" id="tbMatKhau"></span>
-      <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-  </div>
-  `
-  getEle("formNV").innerHTML = content;    
-});
-getEle("btnThem3").addEventListener("click",()=>{
-  const content = `
-  <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-user"></i></span>
-            </div>
-            <input type="text" name="tk" id="ma" class="form-control input-sm"
-                placeholder="Mã">
-        </div>
-        <span class="sp-thongbao" id="tbTKNV"></span>
-        <!-- display:none; vì khi vừa vào browser thì k hiện -->
-        <div id="errorTaiKhoan" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-            </div>
-            <input type="name" name="name" id="name" class="form-control input-sm"
-                placeholder="Họ và tên">
-        </div>
-        <span class="sp-thongbao" id="tbTen"></span>
-        <div id="errortenNV" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
-            </div>
-            <input type="email" name="email" id="email" class="form-control input-sm"
-                placeholder="Email">
-        </div>
-        <span class="sp-thongbao" id="tbEmail"></span>
-        <div id="errorEmail" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-        <div class="input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text"><i class="fa fa-key"></i></span>
-            </div>
-            <input type="text" name="password" id="adress" class="form-control input-sm"
-                placeholder="Địa Chỉ">
-        </div>
-        <span class="sp-thongbao" id="tbMatKhau"></span>
-        <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-      <div class="input-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-key"></i></span>
-          </div>
-          <input type="text" name="password" id="tenCongTy" class="form-control input-sm"
-              placeholder="Tên Công Ty">
-      </div>
-      <span class="sp-thongbao" id="tbMatKhau"></span>
-      <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-      <div class="input-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-key"></i></span>
-          </div>
-          <input type="text" name="password" id="triHoaDon" class="form-control input-sm"
-              placeholder="Trị Hóa Đơn">
-      </div>
-      <span class="sp-thongbao" id="tbMatKhau"></span>
-      <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-  </div>
-  <div class="form-group">
-      <div class="input-group">
-          <div class="input-group-prepend">
-              <span class="input-group-text"><i class="fa fa-key"></i></span>
-          </div>
-          <input type="text" name="password" id="danhGia" class="form-control input-sm"
-              placeholder="Đánh Giá">
-      </div>
-      <span class="sp-thongbao" id="tbMatKhau"></span>
-      <div id="errorMatKhau" style="display: none;" class="text-danger"></div>
-  </div>
-  `
-  getEle("formNV").innerHTML = content;    
-});
-/***RENDER */
-const renderUI = () => {
-    
-
+        `
+    })
 }
+window.renderForm = renderForm;
+
+getEle("btnThem1").addEventListener("click", () => {
+    const content = renderForm(formStudent);
+    getEle("formNV").innerHTML = content;
+});
+getEle("btnThem2").addEventListener("click", () => {
+    const content = renderForm(formEmployee);
+    getEle("formNV").innerHTML = content;
+});
+getEle("btnThem3").addEventListener("click", () => {
+    const content = renderForm(formCustomer);
+    getEle("formNV").innerHTML = content;
+});
+
 
 /***GET INFO */
 const getInfo = () => {
+    const ma = getEle("ma").value;
+    const name = getEle("name").value;
+    const email = getEle("email").value;
+    const adress = getEle("adress").value;
+    const diemToan = getEle("diemToan").value;
+    const diemLy = getEle("diemLy").value;
+    const diemHoa = getEle("diemHoa").value;
+    // const soNgayLam = getEle("soNgayLam").value;
+    // const luongNgay = getEle("luongNgay").value;
+    // const tenCongTy = getEle("tenCongTy").value;
+    // const triHoaDon = getEle("triHoaDon").value;
+    // const danhGia = getEle("danhGia").value;
+
+
+    const student = new Student(name, adress, ma, email, diemToan, diemLy, diemHoa);
+    // const employee = new Employee(name, adress, ma, email, soNgayLam, luongNgay);
+    // const customer = new Customer(name, adress, ma, email, tenCongTy, triHoaDon, danhGia);
+    // const lisperson = new listPerson(student, employee, customer);
+
+    student.diemTrungBinh();
+    // employee.tinhLuongGV();
+    return student;
 }
+
+/***RENDER LIST UI */
+const renderUI = (data) => {
+    let content = "";
+    if (data && data.length > 0) {
+        data.forEach((student) => {
+            content += `
+                  <tr>
+                      <td>${student.ma}</td>
+                      <td>${student.name}</td>
+                      <td>${student.email}</td>
+                      <td>${student.adress}</td>
+                      <td>${student.diemtb}</td>
+                      <td>${student.tongLuong}</td>
+                      <td>
+                        <button class='btn btn-info' onlick="suaMonAn(${student.id})" data-toggle="modal"
+                        data-target="#exampleModal">Sửa</button>
+                        <button class='btn btn-danger' onclick="xoaMonAn(${student.id})">Xóa</button>
+                      </td>
+                   </tr>            
+              `
+        });
+    };
+    getEle("tableDanhSach").innerHTML = content;
+}
+
+
+getEle("btnAddUser").addEventListener("click", (student) => {
+    const user = getInfo();
+    renderUI(student.ma);
+    getEle("btnDong").click();
+    console.log(user);
+});

@@ -10,10 +10,4 @@ export default class Student extends Person {
     diemTrungBinh(){
         this.diemtb = (this.toan + this.ly + this.hoa) / 3;
     }
-    renderTag() {
-        const content = `
-        
-        `
-    }
-
 }
