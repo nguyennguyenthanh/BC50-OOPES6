@@ -185,14 +185,25 @@ const xoaUser = () => {
     renderUI(person);
 }
 window.xoaUser = xoaUser;
-/****UPDATE INFO */
+/**** UPDATE INFO *****/
 const suaUser = (ma) => {
     console.log(ma);
     getEle("header-title").innerHTML = "Edit Info";
-    getEle("btnAddStudent").style.display = "none";
-    getEle("btnAddEmployee").style.display = "none";
-    getEle("btnAddCustomer").style.display = "none";
-    getEle("btnCapNhat").style.display = "block";
+    // getEle("btnAddStudent").style.display = "none";
+    // getEle("btnAddEmployee").style.display = "none";
+    // getEle("btnAddCustomer").style.display = "none";
+    // getEle("btnCapNhat").style.display = "block";
 
 }
 window.suaUser = suaUser;
+/****SAVE IN LOCAL */
+const setLocalStorage = () => {
+    const dataString = JSON.stringify(person.arr);
+    localStorage.setItem("LIST", dataString);
+}
+setLocalStorage();
+const getLocalStorage = () => {
+    var dataString = localStorage.getItem("LIST");
+    person.arr = JSON.parse(dataString);
+    renderUI(person.arr);
+}
