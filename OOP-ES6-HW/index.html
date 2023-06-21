@@ -44,7 +44,7 @@
     <!-- BANNER -->
     <!-- Page Content Holder -->
     <div id="content">
-        <div class="container">
+        <div class="">
             <div class="card text-center">
                 <!-- Header -->
                 <div class="card-header myCardHeader">
@@ -76,9 +76,9 @@
                                 <div class="col-sm-4"> 
                                     <select class="custom-select" id="selLoai">
                                       <option value="all">Chose</option>
-                                      <option value="loai1">Teacher</option>
-                                      <option value="loai2">Student</option>
-                                      <option value="loai3">Employee</option>
+                                      <option value="loai1">Student</option>
+                                      <option value="loai2">Employee</option>
+                                      <option value="loai3">Customer</option>
                                     </select>
                                   </div>
                             </div>
@@ -97,6 +97,9 @@
                                 <th>Address</th>
                                 <th>Average Score</th>
                                 <th>Salary Teacher</th>
+                                <th>Name Company</th>
+                                <th>Bill</th>
+                                <th>Assess</th>
                                 <th><em class="fa fa-cog"></em></th>
                             </tr>
                         </thead>
@@ -140,7 +143,9 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer" id="modal-footer">
-                    <button id="btnAddUser" type="button" class="btn btn-success">Add User</button>
+                    <button id="btnAddStudent" type="button" class="btn btn-success">Add Student</button>
+                    <button id="btnAddEmployee" type="button" class="btn btn-success">Add Employee</button>
+                    <button id="btnAddCustomer" type="button" class="btn btn-success">Add Customer</button>
                     <button id="btnCapNhat" type="button" class="btn btn-success" style="display: none;">Update</button>
                     <button id="btnReset" type="button" class="btn btn-success">Reset</button>
                     <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

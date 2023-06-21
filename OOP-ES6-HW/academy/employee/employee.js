@@ -7,6 +7,6 @@ export default class Employee extends Person {
         this.tongLuong = 0;
     }
     tinhLuongGV = () => {
-        tongLuong = this.luongTheoNgay * this.soNgayLamViec;
+        this.tongLuong = Number(this.luongTheoNgay) * Number(this.soNgayLamViec);
     }
 }

@@ -4,10 +4,9 @@ export default class Person {
         this.diaChi = _diaChi;
         this.ma = _ma;
         this.email = _email;
+        this.arr =[];
     }
-    renderTag() {
-        const content = `
-            
-        `
+    addList(user){
+        this.arr.push(user);
     }
 }
