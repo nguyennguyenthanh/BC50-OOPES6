@@ -5,8 +5,8 @@ import Customer from "../customer/customer.js";
 import listPerson from "../listperson/listperson.js";
 
 const getEle = (id) => document.getElementById(id);
-
 const person = new Person();
+
 /***RENDER POPUP */
 const formStudent = [
     { id: 'ma', name: 'maSo', placeHolder: 'Mã', spanTag: 'tbMa', errorId: 'errorMaSo' },
@@ -93,7 +93,6 @@ const getInfoEmployee = () => {
     const soNgayLam = getEle("soNgayLam").value;
     const luongNgay = getEle("luongNgay").value;
 
-
     const employee = new Employee(name, address, ma, email, soNgayLam, luongNgay);
     employee.tinhLuongGV();
     return employee;
@@ -111,6 +110,7 @@ const getInfoCustomer = () => {
     const customer = new Customer(name, address, ma, email, tenCongTy, triHoaDon, danhGia);
     return customer;
 }
+
 /***RENDER LIST UI */
 const renderUI = (data) => {
     let content = "";
@@ -128,8 +128,8 @@ const renderUI = (data) => {
                       <td>${student.triHoaDon}</td>
                       <td>${student.danhGia}</td>
                       <td>
-                        <button class='btn btn-info' data-toggle="modal" data-target="#myModal" onlick="suaUser(${student.ma})">Sửa</button>
-                        <button id="xoa" class='btn btn-danger' onclick="xoaUser(${student.ma})">Xóa</button>
+                        <button class='btn btn-info' data-toggle="modal" data-target="#myModal" onclick="suaUser(${student.ma})">Edit</button>
+                        <button id="xoa" class='btn btn-danger' onclick="xoaUser(${student.ma})">Delete</button>
                       </td>
                    </tr>            
               `
@@ -137,6 +137,7 @@ const renderUI = (data) => {
     };
     getEle("tableDanhSach").innerHTML = content;
 }
+
 /***** ADD LIST SCHOOL *****/
 //Add Student
 getEle("btnThem1").addEventListener("click", () => {
@@ -149,6 +150,7 @@ getEle("btnAddStudent").addEventListener("click", () => {
     const user = getInfoStudent();
     person.addList(user);
     renderUI(person.arr);
+    setLocalStorage();
     getEle("btnDong").click();
 });
 //Add Employee
@@ -162,6 +164,7 @@ getEle("btnAddEmployee").addEventListener("click", () => {
     const user = getInfoEmployee();
     person.addList(user);
     renderUI(person.arr);
+    setLocalStorage();
     getEle("btnDong").click();
 });
 //Add Customer
@@ -175,35 +178,60 @@ getEle("btnAddCustomer").addEventListener("click", () => {
     const user = getInfoCustomer();
     person.addList(user);
     renderUI(person.arr);
+    setLocalStorage();
     getEle("btnDong").click();
 });
 
 /******* DELETE USER ******/
 const xoaUser = () => {
-    const index = person.arr.filter((user) => user.arr.ma === ma);
+    const index = person.arr.findIndex(user => user.arr.ma === ma);
     person.arr.splice(index, 1);
-    renderUI(person);
+    renderUI(person.arr);
 }
 window.xoaUser = xoaUser;
-/**** UPDATE INFO *****/
-const suaUser = (ma) => {
-    console.log(ma);
-    getEle("header-title").innerHTML = "Edit Info";
-    // getEle("btnAddStudent").style.display = "none";
-    // getEle("btnAddEmployee").style.display = "none";
-    // getEle("btnAddCustomer").style.display = "none";
-    // getEle("btnCapNhat").style.display = "block";
 
+/**** UPDATE INFO *****/
+//UI update info popup
+const suaUser = () => {
+    getEle("header-title").innerHTML = "Edit Info";
+    getEle("btnAddStudent").style.display = "none";
+    getEle("btnAddEmployee").style.display = "none";
+    getEle("btnAddCustomer").style.display = "none";
+    getEle("btnCapNhat").style.display = "block";
+    getEle("ma").disabled = true;
 }
 window.suaUser = suaUser;
-/****SAVE IN LOCAL */
+//Button Update
+const updatePerson = (typePerson)=>{
+    const user = person.arr.find(user => user.ma === ma);
+    if(user){
+        person.arr[user] = typePerson;
+    }
+}
+getEle("btnCapNhat").addEventListener("click",()=>{ 
+    const student = getInfoStudent();
+    console.log(student);
+    // const employee = getInfoEmployee();
+    // const customer = getInfoCustomer();
+    updatePerson(student);
+    renderUI(person.arr);
+    setLocalStorage();
+    getEle("btnDong").click();
+    // // updatePerson(employee);
+    // // updatePerson(customer);
+    
+});
+/****SAVE IN LOCALSTORAGE */
 const setLocalStorage = () => {
     const dataString = JSON.stringify(person.arr);
     localStorage.setItem("LIST", dataString);
 }
-setLocalStorage();
-const getLocalStorage = () => {
-    var dataString = localStorage.getItem("LIST");
-    person.arr = JSON.parse(dataString);
-    renderUI(person.arr);
+
+const getLocalStorage = () => {    
+    if (localStorage.getItem("LIST")) {
+        const dataString = localStorage.getItem("LIST");
+        const dataJson = JSON.parse(dataString);
+        renderUI(dataJson);
+    }
 }
+getLocalStorage();
