@@ -197,15 +197,14 @@ const suaUser = () => {
     getEle("btnAddStudent").style.display = "none";
     getEle("btnAddEmployee").style.display = "none";
     getEle("btnAddCustomer").style.display = "none";
-    getEle("btnCapNhat").style.display = "block";
-    getEle("ma").disabled = true;
+    getEle("btnCapNhat").style.display = "block";    
 }
 window.suaUser = suaUser;
 //Button Update
 const updatePerson = (typePerson)=>{
-    const user = person.arr.find(user => user.ma === ma);
-    if(user){
-        person.arr[user] = typePerson;
+    const index = person.arr.find(user => user.ma === ma);
+    if(index){
+        person.arr[index] = typePerson;
     }
 }
 getEle("btnCapNhat").addEventListener("click",()=>{ 
@@ -214,12 +213,11 @@ getEle("btnCapNhat").addEventListener("click",()=>{
     // const employee = getInfoEmployee();
     // const customer = getInfoCustomer();
     updatePerson(student);
-    renderUI(person.arr);
+    renderUI(person);
     setLocalStorage();
     getEle("btnDong").click();
     // // updatePerson(employee);
     // // updatePerson(customer);
-    
 });
 /****SAVE IN LOCALSTORAGE */
 const setLocalStorage = () => {
