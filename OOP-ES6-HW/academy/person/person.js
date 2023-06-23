@@ -1,8 +1,8 @@
 export default class Person {
-    constructor(_hoTen, _diaChi, _ma, _email) {
-        this.hoTen = _hoTen;
-        this.diaChi = _diaChi;
-        this.ma = _ma;
+    constructor(_name, _address, _id, _email) {
+        this.name = _name;
+        this.address = _address;
+        this.id = _id;
         this.email = _email;
         this.arr =[];
     }

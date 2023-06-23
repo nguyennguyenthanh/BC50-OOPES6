@@ -2,140 +2,90 @@ import Person from "../person/person.js";
 import Student from "../student/student.js";
 import Employee from "../employee/employee.js";
 import Customer from "../customer/customer.js";
-import listPerson from "../listperson/listperson.js";
+import ListPerson from "../listperson/listperson.js";
 
 const getEle = (id) => document.getElementById(id);
+const listperson = new ListPerson();
 const person = new Person();
 
 /***RENDER POPUP */
 const formStudent = [
-    { id: 'ma', name: 'maSo', placeHolder: 'Mã', spanTag: 'tbMa', errorId: 'errorMaSo' },
-    { id: 'name', name: 'ten', placeHolder: 'Họ và tên', spanTag: 'tbTen', errorId: 'errorName' },
-    { id: 'email', name: 'email', placeHolder: 'Email', spanTag: 'tbEmail', errorId: 'errorEmail' },
-    { id: 'address', name: 'diaChi', placeHolder: 'Địa Chỉ', spanTag: 'tbAddress', errorId: 'errorAddress' },
+    { id: 'id1', name: 'maSo', placeHolder: 'ID', spanTag: 'tbId', errorId: 'errorMaSo' },
+    { id: 'name1', name: 'ten', placeHolder: 'FullName', spanTag: 'tbTen', errorId: 'errorName' },
+    { id: 'email1', name: 'email', placeHolder: 'Email', spanTag: 'tbEmail', errorId: 'errorEmail' },
+    { id: 'address1', name: 'diaChi', placeHolder: 'Address', spanTag: 'tbAddress', errorId: 'errorAddress' },
     { id: 'diemToan', name: 'mathScore', placeHolder: 'Điểm Toán', spanTag: 'tbDiemToan', errorId: 'errorDiemToan' },
     { id: 'diemLy', name: 'phisicScore', placeHolder: 'Điểm Lý', spanTag: 'tbDiemLy', errorId: 'errorDiemLy' },
     { id: 'diemHoa', name: 'chemisScore', placeHolder: 'Điểm Hóa', spanTag: 'tbDiemHoa', errorId: 'errorDiemHoa' },
 ];
 const formEmployee = [
-    { id: 'ma', name: 'maSo', placeHolder: 'Mã', spanTag: 'tbMa', errorId: 'errorMaSo' },
-    { id: 'name', name: 'ten', placeHolder: 'Họ và tên', spanTag: 'tbTen', errorId: 'errorName' },
-    { id: 'email', name: 'email', placeHolder: 'Email', spanTag: 'tbEmail', errorId: 'errorEmail' },
-    { id: 'address', name: 'diaChi', placeHolder: 'Địa Chỉ', spanTag: 'tbAddress', errorId: 'errorAddress' },
-    { id: 'soNgayLam', name: 'ngayLam', placeHolder: 'Số Ngày Làm', spanTag: 'tbSoNgayLam', errorId: 'errorSoNgayLam' },
-    { id: 'luongNgay', name: 'luongNgay', placeHolder: 'Lương Theo Ngày', spanTag: 'tbluongTheoNgay', errorId: 'errorluongTheoNgay' },
+    { id: 'id2', name: 'maSo', placeHolder: 'ID', spanTag: 'tbId', errorId: 'errorMaSo' },
+    { id: 'name2', name: 'ten', placeHolder: 'FullName', spanTag: 'tbTen', errorId: 'errorName' },
+    { id: 'email2', name: 'email', placeHolder: 'Email', spanTag: 'tbEmail', errorId: 'errorEmail' },
+    { id: 'address2', name: 'diaChi', placeHolder: 'Address', spanTag: 'tbAddress', errorId: 'errorAddress' },
+    { id: 'soNgayLamViec', name: 'ngayLam', placeHolder: 'Số Ngày Làm', spanTag: 'tbSoNgayLam', errorId: 'errorSoNgayLam' },
+    { id: 'luongTheoNgay', name: 'luongNgay', placeHolder: 'Lương Theo Ngày', spanTag: 'tbluongTheoNgay', errorId: 'errorluongTheoNgay' },
 ];
 const formCustomer = [
-    { id: 'ma', name: 'maSo', placeHolder: 'Mã', spanTag: 'tbMa', errorId: 'errorMaSo' },
-    { id: 'name', name: 'ten', placeHolder: 'Họ và tên', spanTag: 'tbTen', errorId: 'errorName' },
-    { id: 'email', name: 'email', placeHolder: 'Email', spanTag: 'tbEmail', errorId: 'errorEmail' },
-    { id: 'address', name: 'diaChi', placeHolder: 'Địa Chỉ', spanTag: 'tbAddress', errorId: 'errorAddress' },
+    { id: 'id3', name: 'maSo', placeHolder: 'ID', spanTag: 'tbId', errorId: 'errorMaSo' },
+    { id: 'name3', name: 'ten', placeHolder: 'FullName', spanTag: 'tbTen', errorId: 'errorName' },
+    { id: 'email3', name: 'email', placeHolder: 'Email', spanTag: 'tbEmail', errorId: 'errorEmail' },
+    { id: 'address3', name: 'diaChi', placeHolder: 'Address', spanTag: 'tbAddress', errorId: 'errorAddress' },
     { id: 'tenCongTy', name: 'nameCom', placeHolder: 'Tên Công Ty', spanTag: 'tbtenCongTy', errorId: 'errortenCongTy' },
     { id: 'triHoaDon', name: 'bill', placeHolder: 'Trị Hóa Đơn', spanTag: 'tbtriHoaDon', errorId: 'errortriHoaDon' },
     { id: 'danhGia', name: 'assess', placeHolder: 'Đánh Giá', spanTag: 'tbdanhGia', errorId: 'errordanhGia' },
 ];
 
-const renderForm = (formType) => {
-    return formType.map((inputItem) => {
-        return `
-        <div class="form-group">
-          <div class="input-group">
-              <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fa fa-user"></i></span>
-              </div>
-              <input type="text" name="${inputItem.name}" id="${inputItem.id}" class="form-control input-sm"
-                  placeholder="${inputItem.placeHolder}">
-          </div>
-          <span class="sp-thongbao" id="${inputItem.spanTag}"></span>
-          <div id="${inputItem.errorId}" style="display: none;" class="text-danger"></div>
-        </div>
-        `
-    })
-}
-window.renderForm = renderForm;
-
 getEle("btnThem1").addEventListener("click", () => {
-    const content = renderForm(formStudent);
-    getEle("formNV").innerHTML = content;
+    listperson.renderForm(formStudent);
 });
 getEle("btnThem2").addEventListener("click", () => {
-    const content = renderForm(formEmployee);
-    getEle("formNV").innerHTML = content;
+    listperson.renderForm(formEmployee);
 });
 getEle("btnThem3").addEventListener("click", () => {
-    const content = renderForm(formCustomer);
-    getEle("formNV").innerHTML = content;
+    listperson.renderForm(formCustomer);
 });
-
 
 /******* GET INFO *******/
 //Get info student
 const getInfoStudent = () => {
-    const ma = getEle("ma").value;
-    const name = getEle("name").value;
-    const email = getEle("email").value;
-    const address = getEle("address").value;
+    const id = getEle("id1").value;
+    const name = getEle("name1").value;
+    const email = getEle("email1").value;
+    const address = getEle("address1").value;
     const diemToan = getEle("diemToan").value;
     const diemLy = getEle("diemLy").value;
     const diemHoa = getEle("diemHoa").value;
 
-    const student = new Student(name, address, ma, email, diemToan, diemLy, diemHoa);
-    // const lisperson = new listPerson(student, employee, customer);
+    var student = new Student(name, address, id, email, diemToan, diemLy, diemHoa);
     student.diemTrungBinh();
     return student;
 }
 //Get info employee
 const getInfoEmployee = () => {
-    const ma = getEle("ma").value;
-    const name = getEle("name").value;
-    const email = getEle("email").value;
-    const address = getEle("address").value;
-    const soNgayLam = getEle("soNgayLam").value;
-    const luongNgay = getEle("luongNgay").value;
+    const id = getEle("id2").value;
+    const name = getEle("name2").value;
+    const email = getEle("email2").value;
+    const address = getEle("address2").value;
+    const soNgayLam = getEle("soNgayLamViec").value;
+    const luongNgay = getEle("luongTheoNgay").value;
 
-    const employee = new Employee(name, address, ma, email, soNgayLam, luongNgay);
+    const employee = new Employee(name, address, id, email, soNgayLam, luongNgay);
     employee.tinhLuongGV();
     return employee;
 }
 //Get info Customer
 const getInfoCustomer = () => {
-    const ma = getEle("ma").value;
-    const name = getEle("name").value;
-    const email = getEle("email").value;
-    const address = getEle("address").value;
+    const id = getEle("id3").value;
+    const name = getEle("name3").value;
+    const email = getEle("email3").value;
+    const address = getEle("address3").value;
     const tenCongTy = getEle("tenCongTy").value;
     const triHoaDon = getEle("triHoaDon").value;
     const danhGia = getEle("danhGia").value;
 
-    const customer = new Customer(name, address, ma, email, tenCongTy, triHoaDon, danhGia);
+    const customer = new Customer(name, address, id, email, tenCongTy, triHoaDon, danhGia);
     return customer;
-}
-
-/***RENDER LIST UI */
-const renderUI = (data) => {
-    let content = "";
-    if (data && data.length > 0) {
-        data.forEach((student) => {
-            content += `
-                  <tr>
-                      <td>${student.ma}</td>
-                      <td>${student.hoTen}</td>
-                      <td>${student.email}</td>
-                      <td>${student.diaChi}</td>
-                      <td>${student.diemtb}</td>
-                      <td>${student.tongLuong}</td>
-                      <td>${student.tenCongTy}</td>
-                      <td>${student.triHoaDon}</td>
-                      <td>${student.danhGia}</td>
-                      <td>
-                        <button class='btn btn-info' data-toggle="modal" data-target="#myModal" onclick="suaUser(${student.ma})">Edit</button>
-                        <button id="xoa" class='btn btn-danger' onclick="xoaUser(${student.ma})">Delete</button>
-                      </td>
-                   </tr>            
-              `
-        });
-    };
-    getEle("tableDanhSach").innerHTML = content;
 }
 
 /***** ADD LIST SCHOOL *****/
@@ -145,11 +95,12 @@ getEle("btnThem1").addEventListener("click", () => {
     getEle("btnAddStudent").style.display = "block";
     getEle("btnAddEmployee").style.display = "none";
     getEle("btnAddCustomer").style.display = "none";
+    getEle("btnUpdate").style.display = "none";
 });
 getEle("btnAddStudent").addEventListener("click", () => {
     const user = getInfoStudent();
     person.addList(user);
-    renderUI(person.arr);
+    listperson.renderUI(person.arr);
     setLocalStorage();
     getEle("btnDong").click();
 });
@@ -159,11 +110,12 @@ getEle("btnThem2").addEventListener("click", () => {
     getEle("btnAddStudent").style.display = "none";
     getEle("btnAddEmployee").style.display = "block";
     getEle("btnAddCustomer").style.display = "none";
+    getEle("btnUpdate").style.display = "none";
 });
 getEle("btnAddEmployee").addEventListener("click", () => {
     const user = getInfoEmployee();
     person.addList(user);
-    renderUI(person.arr);
+    listperson.renderUI(person.arr);
     setLocalStorage();
     getEle("btnDong").click();
 });
@@ -173,63 +125,96 @@ getEle("btnThem3").addEventListener("click", () => {
     getEle("btnAddStudent").style.display = "none";
     getEle("btnAddEmployee").style.display = "none";
     getEle("btnAddCustomer").style.display = "block";
+    getEle("btnUpdate").style.display = "none";
 });
 getEle("btnAddCustomer").addEventListener("click", () => {
     const user = getInfoCustomer();
     person.addList(user);
-    renderUI(person.arr);
+    listperson.renderUI(person.arr);
     setLocalStorage();
     getEle("btnDong").click();
 });
 
 /******* DELETE USER ******/
-const xoaUser = () => {
-    const index = person.arr.findIndex(user => user.arr.ma === ma);
+const deleteUser = (id) => {
+    const index = person.arr.findIndex(user => user.arr.id === id);
     person.arr.splice(index, 1);
-    renderUI(person.arr);
+    listperson.renderUI(person.arr);
+    setLocalStorage();
 }
-window.xoaUser = xoaUser;
-
-/**** UPDATE INFO *****/
+window.deleteUser = deleteUser;
+/**** EDIT PERSON ****/
 //UI update info popup
-const suaUser = () => {
+const editUser = (id) => {
+    const user = listperson.editInfoPerson(id);
+    //Edit UI
     getEle("header-title").innerHTML = "Edit Info";
     getEle("btnAddStudent").style.display = "none";
     getEle("btnAddEmployee").style.display = "none";
     getEle("btnAddCustomer").style.display = "none";
-    getEle("btnCapNhat").style.display = "block";    
-}
-window.suaUser = suaUser;
-//Button Update
-const updatePerson = (typePerson)=>{
-    const index = person.arr.find(user => user.ma === ma);
-    if(index){
-        person.arr[index] = typePerson;
+    getEle("btnUpdate").style.display = "block";    
+    if (user) {
+        //Student
+        getEle("id1").value = user.id;
+        getEle("id1").disabled = true;
+        getEle("name1").value = user.name;
+        getEle("email1").value = user.email;
+        getEle("address1").value = user.address;
+        getEle("diemToan").value = user.diemToan;
+        getEle("diemLy").value = user.diemLy;
+        getEle("diemHoa").value = user.diemHoa;
+        // //Employee
+        // getEle("id2").value = person.id;
+        // getEle("id2").disabled = true;
+        // getEle("name2").value = person.name;
+        // getEle("email2").value = person.email;
+        // getEle("address2").value = person.address;
+        // getEle("soNgayLam").value = person.soNgayLamViec;
+        // getEle("luongNgay").value = person.luongTheoNgay;
+        // //Customer
+        // getEle("id3").value = person.id;
+        // getEle("id3").disabled = true;
+        // getEle("name3").value = person.name;
+        // getEle("email3").value = person.email;
+        // getEle("address3").value = person.address;
+        // getEle("tenCongTy").value = person.tenCongTy;
+        // getEle("triHoaDon").value = person.triHoaDon;
+        // getEle("danhGia").value = person.danhGia;  
     }
-}
-getEle("btnCapNhat").addEventListener("click",()=>{ 
-    const student = getInfoStudent();
-    console.log(student);
-    // const employee = getInfoEmployee();
-    // const customer = getInfoCustomer();
-    updatePerson(student);
-    renderUI(person);
     setLocalStorage();
-    getEle("btnDong").click();
-    // // updatePerson(employee);
-    // // updatePerson(customer);
-});
+}
+window.editUser = editUser;
+
+// /**** UPDATE INFO *****/
+// //Button Update
+// const updatePerson = (typePerson) => {
+//     const index = person.arr.find(user => user.id === id);
+//     if (index > 0) {
+//         person.arr[index] = typePerson;
+//     }
+// }
+// getEle("btnUpdate").addEventListener("click", () => {
+//     const student = getInfoStudent();
+//     // const employee = getInfoEmployee();
+//     // const customer = getInfoCustomer();
+//     updatePerson(student);
+//     listperson.renderUI(person.arr);
+//     setLocalStorage();
+//     getEle("btnDong").click();
+//     // // updatePerson(employee);
+//     // // updatePerson(customer);
+// });
+
 /****SAVE IN LOCALSTORAGE */
 const setLocalStorage = () => {
     const dataString = JSON.stringify(person.arr);
     localStorage.setItem("LIST", dataString);
 }
-
-const getLocalStorage = () => {    
+const getLocalStorage = () => {
     if (localStorage.getItem("LIST")) {
         const dataString = localStorage.getItem("LIST");
-        const dataJson = JSON.parse(dataString);
-        renderUI(dataJson);
+        person.arr = JSON.parse(dataString);
+        listperson.renderUI(person.arr);
     }
 }
 getLocalStorage();
