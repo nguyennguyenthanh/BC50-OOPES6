@@ -137,7 +137,7 @@ getEle("btnAddCustomer").addEventListener("click", () => {
 
 /******* DELETE USER ******/
 const deleteUser = (id) => {
-    const index = person.arr.findIndex(user => user.arr.id === id);
+    const index = person.arr.findIndex(user => user.id === id);
     person.arr.splice(index, 1);
     listperson.renderUI(person.arr);
     setLocalStorage();
@@ -146,6 +146,8 @@ window.deleteUser = deleteUser;
 /**** EDIT PERSON ****/
 //UI update info popup
 const editUser = (id) => {
+    const human = getInfoStudent();
+    person.addList(human);
     const user = listperson.editInfoPerson(id);
     //Edit UI
     getEle("header-title").innerHTML = "Edit Info";
@@ -185,25 +187,18 @@ const editUser = (id) => {
 }
 window.editUser = editUser;
 
-// /**** UPDATE INFO *****/
-// //Button Update
-// const updatePerson = (typePerson) => {
-//     const index = person.arr.find(user => user.id === id);
-//     if (index > 0) {
-//         person.arr[index] = typePerson;
-//     }
-// }
-// getEle("btnUpdate").addEventListener("click", () => {
-//     const student = getInfoStudent();
-//     // const employee = getInfoEmployee();
-//     // const customer = getInfoCustomer();
-//     updatePerson(student);
-//     listperson.renderUI(person.arr);
-//     setLocalStorage();
-//     getEle("btnDong").click();
-//     // // updatePerson(employee);
-//     // // updatePerson(customer);
-// });
+/**** UPDATE INFO *****/
+getEle("btnUpdate").addEventListener("click", () => {
+    const student = getInfoStudent();
+    // const employee = getInfoEmployee();
+    // const customer = getInfoCustomer();
+    listperson.updatePerson(student); 
+    listperson.renderUI(person.arr); 
+    setLocalStorage();
+    getEle("btnDong").click();
+    // // updatePerson(employee);
+    // // updatePerson(customer);
+});
 
 /****SAVE IN LOCALSTORAGE */
 const setLocalStorage = () => {

@@ -24,10 +24,10 @@ export default class ListPerson {
             </div>
             `
         })
-        document.getElementById("formNV").innerHTML = content;     
+        document.getElementById("formNV").innerHTML = content;
     }
     /***RENDER LIST UI */
-    renderUI (data) {
+    renderUI(data) {
         let content = "";
         if (data && data.length > 0) {
             data.forEach((user) => {
@@ -53,11 +53,18 @@ export default class ListPerson {
         document.getElementById("tableDanhSach").innerHTML = content;
     }
     /**** EDIT PERSON ****/
-    editInfoPerson(id){
+    editInfoPerson(id) {
         const index = this.arr.findIndex(user => user.id === id);
-        if(index !== -1){
+        if (index !== -1) {
             return this.arr[index];
         }
         return null;
+    }
+    /****UPDATE PERSON ****/
+    updatePerson(typePerson,id) {
+        const index = this.arr.find(user => user.id === id);
+        if (index > 0) {
+            this.arr[index] = typePerson;
+        }
     }
 }
