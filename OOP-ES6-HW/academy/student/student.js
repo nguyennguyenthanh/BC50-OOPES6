@@ -9,5 +9,6 @@ export default class Student extends Person {
     }
     diemTrungBinh(){
         this.diemtb = (Number(this.toan) + Number(this.ly) + Number(this.hoa)) / 3;
+        return this.diemtb
     }
 }
